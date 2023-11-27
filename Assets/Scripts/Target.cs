@@ -2,10 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TargetType
+{
+    None,
+    Good,
+    Bad
+}
+
 public class Target : MonoBehaviour
 {
     public int scoreValue;
     public ParticleSystem explosionParticle;
+    public TargetType targetType;
 
     private GameManager gameManager;
     private Rigidbody rigidbody;
@@ -40,28 +48,20 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
-        gameManager.UpdateScore(scoreValue);
-        Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        if (gameManager.isGameActive)
+        {
+            Destroy(gameObject);
+            gameManager.UpdateScore(scoreValue);
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (targetType == TargetType.Good)
+        {
+            gameManager.GameOver();
+        }
         Destroy(gameObject);
     }
-
-    /*private Vector3 RandomForce()
-    {
-        return Vector3.up * Random.Range(minHeight, maxHeight);
-    }
-
-    private Vector3 RandomSpawnPosition()
-    {
-        return new Vector3(Random.Range(-xRangePosition, xRangePosition), yPosition);
-    }
-
-    private float RandomTorque()
-    {
-        return Random.Range(-torqueRange, torqueRange);
-    }*/
 }

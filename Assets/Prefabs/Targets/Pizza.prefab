@@ -129,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 6
   explosionParticle: {fileID: 3199346384015752365, guid: 307229a5540374aae98859caad2128a3, type: 3}
+  targetType: 1

@@ -60,7 +60,7 @@ public class Target : MonoBehaviour
     {
         if (targetType == TargetType.Good)
         {
-            gameManager.GameOver();
+            gameManager.UpdateLives(1); 
         }
         Destroy(gameObject);
     }

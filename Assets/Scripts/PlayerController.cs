@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigidBody;
     public float turnSpeed = 21;
     private Quaternion rotation = Quaternion.identity;
+    private bool hasKey;
+    private bool isNearKey;
 
     private void Start()
     {
@@ -38,5 +40,27 @@ public class PlayerController : MonoBehaviour
     {
         rigidBody.MovePosition(rigidBody.position + movementDirection * animator.deltaPosition.magnitude);
         rigidBody.MoveRotation(rotation);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Key key))
+        {
+            if (!hasKey)
+            {
+                Debug.Log("Press E To Grab The Key");
+                isNearKey = true;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (isNearKey && Input.GetKeyDown(KeyCode.E))
+        {
+            hasKey = true;
+            //key.Destroy();
+            Debug.Log("Has Key\n Find Exit");
+        }
     }
 }
